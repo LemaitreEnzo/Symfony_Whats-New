@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FunFact{% endblock %}
+
+{% block body %}
+    <h1>Create new FunFact</h1>
+
+    {{ include('fun_fact/_form.html.twig') }}
+
+    <a href="{{ path('app_fun_fact_index') }}">back to list</a>
+{% endblock %}

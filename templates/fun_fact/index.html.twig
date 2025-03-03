@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FunFact index{% endblock %}
+
+{% block body %}
+    <h1>FunFact index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fun_fact in fun_facts %}
+            <tr>
+                <td>{{ fun_fact.id }}</td>
+                <td>{{ fun_fact.content }}</td>
+                <td>
+                    <a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">show</a>
+                    <a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fun_fact_new') }}">Create new</a>
+{% endblock %}
