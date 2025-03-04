@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Schedule;
 use App\Factory\ActuFactory;
 use App\Factory\CategoryFactory;
 use App\Factory\FunFactFactory;
@@ -19,7 +18,7 @@ class AppFixtures extends Fixture
         PromoFactory::createPromo();
         UserFactory::createMany(10);
         CategoryFactory::createMany(5);
-        ActuFactory::createMany(50);
+        ActuFactory::createMany(15);
         FunFactFactory::createMany(50);
         ScheduleFactory::createMany(2);
     }

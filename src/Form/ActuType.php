@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ActuType extends AbstractType
 {
@@ -23,6 +24,9 @@ class ActuType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
             ])
         ;
     }
