@@ -17,11 +17,11 @@ class Schedule
     #[ORM\Column(length: 255)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $promo = null;
+    #[ORM\ManyToOne(inversedBy: 'schedules')]
+    private ?Promo $promo = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $day = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
     {
@@ -40,26 +40,26 @@ class Schedule
         return $this;
     }
 
-    public function getPromo(): ?string
+    public function getPromo(): ?Promo
     {
         return $this->promo;
     }
 
-    public function setPromo(string $promo): static
+    public function setPromo(?Promo $promo): static
     {
         $this->promo = $promo;
 
         return $this;
     }
 
-    public function getDay(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->day;
+        return $this->date;
     }
 
-    public function setDay(\DateTimeInterface $day): static
+    public function setDate(\DateTimeInterface $date): static
     {
-        $this->day = $day;
+        $this->date = $date;
 
         return $this;
     }

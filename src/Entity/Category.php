@@ -21,7 +21,7 @@ class Category
     /**
      * @var Collection<int, Actu>
      */
-    #[ORM\ManyToMany(targetEntity: Actu::class, mappedBy: 'category_id')]
+    #[ORM\ManyToMany(targetEntity: Actu::class, mappedBy: 'category')]
     private Collection $actus;
 
     public function __construct()
@@ -58,7 +58,7 @@ class Category
     {
         if (!$this->actus->contains($actu)) {
             $this->actus->add($actu);
-            $actu->addCategoryId($this);
+            $actu->setCategory($this);
         }
 
         return $this;
@@ -66,8 +66,8 @@ class Category
 
     public function removeActu(Actu $actu): static
     {
-        if ($this->actus->removeElement($actu)) {
-            $actu->removeCategoryId($this);
+        if ($actu->getCategory() === $this) {
+            $actu->setCategory($this);
         }
 
         return $this;

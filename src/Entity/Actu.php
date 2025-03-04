@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ActuRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,19 +20,12 @@ class Actu
     #[ORM\Column(length: 255)]
     private ?string $content = null;
 
-    /**
-     * @var Collection<int, Category>
-     */
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'actus')]
-    private Collection $category_id;
+    #[ORM\ManyToOne(inversedBy: 'actus')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
-
-    public function __construct()
-    {
-        $this->category_id = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -65,30 +56,17 @@ class Actu
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategoryId(): Collection
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function addCategoryId(Category $categoryId): static
+    public function setCategory(?Category $category): static
     {
-        if (!$this->category_id->contains($categoryId)) {
-            $this->category_id->add($categoryId);
-        }
+        $this->category = $category;
 
         return $this;
     }
-
-    public function removeCategoryId(Category $categoryId): static
-    {
-        $this->category_id->removeElement($categoryId);
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;

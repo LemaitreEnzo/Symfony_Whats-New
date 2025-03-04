@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Actu;
 use App\Form\ActuType;
-use App\Repository\ActuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/actu')]
 final class ActuController extends AbstractController
 {
-    #[Route(name: 'app_actu_index', methods: ['GET'])]
-    public function index(ActuRepository $actuRepository): Response
-    {
-        return $this->render('actu/index.html.twig', [
-            'actus' => $actuRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_actu_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

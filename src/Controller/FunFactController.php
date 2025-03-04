@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\FunFact;
 use App\Form\FunFactType;
-use App\Repository\FunFactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,14 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/fun/fact')]
 final class FunFactController extends AbstractController
 {
-    #[Route(name: 'app_fun_fact_index', methods: ['GET'])]
-    public function index(FunFactRepository $funFactRepository): Response
-    {
-        return $this->render('fun_fact/index.html.twig', [
-            'fun_facts' => $funFactRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_fun_fact_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

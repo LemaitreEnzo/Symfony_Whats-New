@@ -8,17 +8,13 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ fun_fact.id }}</td>
-            </tr>
-            <tr>
                 <th>Content</th>
                 <td>{{ fun_fact.content }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_fun_fact_index') }}">back to list</a>
+    <a href="{{ path('app_index') }}">back to list</a>
 
     <a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">edit</a>
 

@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Schedule index
+{% endblock %}
+
+{% block body %}
+	<h1>Schedule index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Content</th>
+				<th>Promo</th>
+				<th>Day</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for schedule in schedules %}
+				<tr>
+					<td>{{ schedule.content }}</td>
+					<td>{{ schedule.promo }}</td>
+					<td>{{ schedule.date ? schedule.date|date('Y-m-d') : '' }}</td>
+					<td>
+						<a href="{{ path('app_schedule_show', {'id': schedule.id}) }}">show</a>
+						<a href="{{ path('app_schedule_edit', {'id': schedule.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_schedule_new') }}">Create new</a>
+
+	<h1>FunFact index</h1>
+
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{% for fun_fact in fun_facts %}
+				<div class="swiper-slide">
+					<div>{{ fun_fact.content }}</div>
+					<div>
+						<a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">Afficher</a>
+						<a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">Modifier</a>
+					</div>
+				</div>
+			{% else %}
+				<div class="swiper-slide">
+					<div colspan="3">Aucun enregistrement trouvé</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="swiper-pagination"></div>
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+	</div>
+
+	<a href="{{ path('app_fun_fact_new') }}">Create new</a>
+
+	<h1>Actu index</h1>
+
+	<div class="container">
+		<div class="row">
+			{% for item in rss_items %}
+				<div class="col-md-4">
+					<div class="card mb-4">
+						{% if item.image %}
+							<img src="{{ item.image }}" class="card-img-top" alt="{{ item.title }}">
+						{% endif %}
+						<div class="card-body">
+							<h5 class="card-title">{{ item.title }}</h5>
+							<p class="card-text">{{ item.description}}</p>
+							<p class="card-text">
+								<small class="text-muted">{{ item.date }}</small>
+							</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+			{% for actu in actus %}
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-body">
+							<h5 class="card-title">{{ actu.title }}</h5>
+							<p class="card-text">{{ actu.content }}</p>
+							<p class="card-text">
+								<small class="text-muted">{{ actu.date ? actu.date|date('Y-m-d') : '' }}</small>
+							</p>
+							<a href="{{ path('app_actu_show', {'id': actu.id}) }}" class="btn btn-primary">Show</a>
+							<a href="{{ path('app_actu_edit', {'id': actu.id}) }}" class="btn btn-secondary">Edit</a>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="col-12">
+					<div class="alert alert-warning" role="alert">
+						No records found
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+	<a href="{{ path('app_actu_new') }}">Create new</a>
+
+{% endblock %}
