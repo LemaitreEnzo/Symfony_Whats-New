@@ -1,30 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Schedule{% endblock %}
+{% block title %}Schedule
+{% endblock %}
 
 {% block body %}
-    <h1>Schedule</h1>
+	<h1>Schedule</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Content</th>
-                <td>{{ schedule.content }}</td>
-            </tr>
-            <tr>
-                <th>Promo</th>
-                <td>{{ schedule.promo }}</td>
-            </tr>
-            <tr>
-                <th>Day</th>
-                <td>{{ schedule.day ? schedule.day|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr class="table-header-row">
+				<th class="table-header-cell">9:00 - 12:00</th>
+				<th class="table-header-cell">13:00 - 16:00</th>
+				<th class="table-header-cell">Promo</th>
+				<th class="table-header-cell">Day</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="table-body-cell">{{ schedule.contentMorning }}</td>
+				<td class="table-body-cell">{{ schedule.contentAfternoon }}</td>
+				<td class="table-body-cell">{{ schedule.promo }}</td>
+				<td class="table-body-cell">{{ schedule.date ? schedule.date|date('Y-m-d') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_index') }}">back to list</a>
 
-    <a href="{{ path('app_schedule_edit', {'id': schedule.id}) }}">edit</a>
+	<a href="{{ path('app_index') }}">back to list</a>
 
-    {{ include('schedule/_delete_form.html.twig') }}
+	<a href="{{ path('app_schedule_edit', {'id': schedule.id}) }}">edit</a>
+
+	{{ include('schedule/_delete_form.html.twig') }}
 {% endblock %}

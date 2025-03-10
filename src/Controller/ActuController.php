@@ -24,7 +24,7 @@ final class ActuController extends AbstractController
             $entityManager->persist($actu);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_actu_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('actu/new.html.twig', [

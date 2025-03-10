@@ -33,7 +33,8 @@ final class ScheduleFactory extends PersistentProxyObjectFactory
     {
         return [
             'promo' => PromoFactory::random(),
-            'content' => self::faker()->text(255),
+            'contentMorning' => self::faker()->text(255),
+            'contentAfternoon' => self::faker()->text(255),
             'date' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('now', '+1 day')),
         ];
     }

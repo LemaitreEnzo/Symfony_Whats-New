@@ -24,7 +24,7 @@ final class FunFactController extends AbstractController
             $entityManager->persist($funFact);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_fun_fact_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('fun_fact/new.html.twig', [

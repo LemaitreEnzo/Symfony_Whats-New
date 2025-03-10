@@ -24,7 +24,7 @@ final class ScheduleController extends AbstractController
             $entityManager->persist($schedule);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_schedule_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('schedule/new.html.twig', [

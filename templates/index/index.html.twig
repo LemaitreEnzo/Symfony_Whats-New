@@ -6,33 +6,36 @@
 {% block body %}
 	<h1>Schedule index</h1>
 
-	<table class="table">
+	<table class="table schedule-table">
 		<thead>
-			<tr>
-				<th>Content</th>
-				<th>Promo</th>
-				<th>Day</th>
-				<th>actions</th>
+			<tr class="table-header-row">
+				<th class="table-header-cell">9:00 - 12:00</th>
+				<th class="table-header-cell">13:00 - 16:00</th>
+				<th class="table-header-cell">Promo</th>
+				<th class="table-header-cell">Day</th>
+				<th class="table-header-cell">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for schedule in schedules %}
-				<tr>
-					<td>{{ schedule.content }}</td>
-					<td>{{ schedule.promo }}</td>
-					<td>{{ schedule.date ? schedule.date|date('Y-m-d') : '' }}</td>
-					<td>
+				<tr class="table-body-row">
+					<td class="table-body-cell">{{ schedule.contentMorning }}</td>
+					<td class="table-body-cell">{{ schedule.contentAfternoon }}</td>
+					<td class="table-body-cell">{{ schedule.promo }}</td>
+					<td class="table-body-cell">{{ schedule.date ? schedule.date|date('Y-m-d') : '' }}</td>
+					<td class="table-body-cell">
 						<a href="{{ path('app_schedule_show', {'id': schedule.id}) }}">show</a>
 						<a href="{{ path('app_schedule_edit', {'id': schedule.id}) }}">edit</a>
 					</td>
 				</tr>
 			{% else %}
-				<tr>
-					<td colspan="5">no records found</td>
+				<tr class="table-body-row">
+					<td colspan="9">no records found</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+
 
 	<a href="{{ path('app_schedule_new') }}">Create new</a>
 

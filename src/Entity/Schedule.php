@@ -15,7 +15,10 @@ class Schedule
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $content = null;
+    private ?string $contentMorning = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $contentAfternoon = null;
 
     #[ORM\ManyToOne(inversedBy: 'schedules')]
     private ?Promo $promo = null;
@@ -28,14 +31,26 @@ class Schedule
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getContentMorning(): ?string
     {
-        return $this->content;
+        return $this->contentMorning;
     }
 
-    public function setContent(string $content): static
+    public function setContentMorning(string $contentMorning): static
     {
-        $this->content = $content;
+        $this->contentMorning = $contentMorning;
+
+        return $this;
+    }
+
+    public function getContentAfternoon(): ?string
+    {
+        return $this->contentAfternoon;
+    }
+
+    public function setContentAfternoon(string $contentAfternoon): static
+    {
+        $this->contentAfternoon = $contentAfternoon;
 
         return $this;
     }
