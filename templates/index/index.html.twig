@@ -41,38 +41,41 @@
 
 	<h1>FunFact index</h1>
 
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			{% for fun_fact in fun_facts %}
-				<div class="swiper-slide">
-					<div>{{ fun_fact.content }}</div>
-					<div>
-						<a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">Afficher</a>
-						<a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">Modifier</a>
+	<div class="container-swiper">
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				{% for fun_fact in fun_facts %}
+					<div class="swiper-slide card__article">
+						<p>{{ fun_fact.content }}</p>
+						<div>
+							<a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">Afficher</a>
+							<a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">Modifier</a>
+						</div>
 					</div>
-				</div>
-			{% else %}
-				<div class="swiper-slide">
-					<div colspan="3">Aucun enregistrement trouvé</div>
-				</div>
-			{% endfor %}
+				{% else %}
+					<div class="swiper-slide card__article">
+						<div>Aucun enregistrement trouvé</div>
+					</div>
+				{% endfor %}
+			</div>
+
+			<!-- Boutons de navigation -->
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
 		</div>
-		<div class="swiper-pagination"></div>
-		<div class="swiper-button-next"></div>
-		<div class="swiper-button-prev"></div>
 	</div>
 
 	<a href="{{ path('app_fun_fact_new') }}">Create new</a>
 
 	<h1>Actu index</h1>
 
-	<div class="container">
-		<div class="row">
-			{% for actu in actus %}
-				<div class="col-md-4">
+	<div class="container-swiper">
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				{% for actu in actus %}
 					<div class="card mb-4">
 						{% if actu.imageName %}
-							<img class="card-img-top" src="{{ asset('uploads/images/' ~ actu.imageName) }}" alt={{actu.imageName}}>
+							<img class="card-img-top" src="{{ asset('uploads/images/' ~ actu.imageName) }}" alt="{{ actu.imageName }}">
 						{% endif %}
 						<div class="card-body">
 							<h5 class="card-title">{{ actu.title }}</h5>
@@ -80,22 +83,24 @@
 							<p class="card-text">
 								<small class="text-muted">{{ actu.date ? actu.date|date('Y-m-d') : '' }}</small>
 							</p>
-							<a href="{{ path('app_actu_show', {'id': actu.id}) }}" class="btn btn-primary">Show</a>
-							<a href="{{ path('app_actu_edit', {'id': actu.id}) }}" class="btn btn-secondary">Edit</a>
+							<a href="{{ path('app_actu_show', {'id': actu.id}) }}">Show</a>
+							<a href="{{ path('app_actu_edit', {'id': actu.id}) }}">Edit</a>
 						</div>
 					</div>
-				</div>
-			{% else %}
-				<div class="col-12">
+
+				{% else %}
 					<div class="alert alert-warning" role="alert">
 						No records found
 					</div>
-				</div>
-			{% endfor %}
+
+				{% endfor %}
+			</div>
+			<div class="swiper-pagination"></div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
 		</div>
 	</div>
 
 
 	<a href="{{ path('app_actu_new') }}">Create new</a>
-
 {% endblock %}
