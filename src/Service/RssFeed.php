@@ -6,8 +6,7 @@ use App\Entity\Actu;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use SimpleXMLElement;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Exception;
 
 class RssFeed
 {
@@ -23,15 +22,19 @@ class RssFeed
 
     public function getRssItems(): array
     {
-        $rssContent = file_get_contents($this->rssUrl);
+        $rssContent = @file_get_contents($this->rssUrl);
+        if ($rssContent === false) {
+            throw new Exception('Impossible de lire le flux RSS');
+        }
+
         $rss = new SimpleXMLElement($rssContent);
-        
         $items = [];
 
         foreach ($rss->channel->item as $item) {
             $description = mb_convert_encoding((string) $item->description, 'UTF-8');
             $content = (string) $item->children('content', true);
             $imageUrl = $this->extractImageUrl($content);
+
             $items[] = [
                 'title' => (string) $item->title,
                 'link' => (string) $item->link,
@@ -40,10 +43,8 @@ class RssFeed
                 'image' => $imageUrl
             ];
 
-            // Créez et persistez l'objet Actu
             $this->createAndPersistActu(
                 (string) $item->title,
-                (string) $item->link,
                 (string) $item->pubDate,
                 strip_tags($description),
                 $imageUrl
@@ -53,21 +54,33 @@ class RssFeed
         return $items;
     }
 
-    private function extractImageUrl(string $description): ?string
+    private function extractImageUrl(string $content): ?string
     {
-        preg_match('/<img.*?src=["\'](.*?)["\']/', $description, $matches);
+        preg_match('/<img.*?src=["\'](.*?)["\']/', $content, $matches);
         return $matches[1] ?? null;
     }
 
-    private function createAndPersistActu(string $title, string $link, string $date, string $description, ?string $imageUrl): void
+    private function createAndPersistActu(string $title, string $date, string $description, ?string $imageUrl): void
     {
+
+        // Vérifiez si une actu avec le même titre et la même date existe déjà
+        $existingActu = $this->entityManager->getRepository(Actu::class)->findOneBy([
+            'title' => $title,
+            'date' => new \DateTime($date),
+        ]);
+
+        if ($existingActu) {
+            // Si l'actu existe déjà, ne rien faire
+            return;
+        }
+
+        
         $actu = new Actu();
         $actu->setTitle($title);
         $actu->setContent($description);
         $actu->setDate(new \DateTime($date));
 
-        // Définissez une catégorie par défaut ou aléatoire
-        $defaultCategory = $this->categoryRepository->findOneBy([]); // Ou trouvez une catégorie spécifique
+        $defaultCategory = $this->categoryRepository->findOneBy([]);
         if ($defaultCategory) {
             $actu->setCategory($defaultCategory);
         } else {
@@ -79,18 +92,16 @@ class RssFeed
             if (!is_dir($uploadsDir)) {
                 mkdir($uploadsDir, 0777, true);
             }
-            $imagePath = $uploadsDir . basename($imageUrl);
-            file_put_contents($imagePath, file_get_contents($imageUrl));
 
-            $imageFile = new UploadedFile(
-                $imagePath,
-                basename($imagePath),
-                'image/jpeg',
-                null,
-                true
-            );
-
-            $actu->setImageFile($imageFile);
+            $imageContents = file_get_contents($imageUrl);
+            if ($imageContents !== false) {
+                $imageName = basename($imageUrl);
+                $imagePath = $uploadsDir . $imageName;
+                file_put_contents($imagePath, $imageContents);
+                $actu->setImageName($imageName);
+            } else {
+                throw new \Exception('Impossible de télécharger l\'image à partir de l\'URL');
+            }
         }
 
         $this->entityManager->persist($actu);

@@ -10,7 +10,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 #[ORM\Entity(repositoryClass: ActuRepository::class)]
-#[Vich\Uploadable]
 class Actu
 {
     #[ORM\Id]
@@ -26,18 +25,10 @@ class Actu
 
     #[ORM\ManyToOne(inversedBy: 'actus')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
-
-    
-    #[Vich\UploadableField(mapping: 'actus', fileNameProperty: 'imageName')]
-    private ?File $imageFile = null;
+    private ?Category $category = null; 
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
-
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt = null;
 
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -60,22 +51,6 @@ class Actu
         return $this;
     }
 
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-    
-        if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        // dd($this->imageFile);
-    }
-    
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
