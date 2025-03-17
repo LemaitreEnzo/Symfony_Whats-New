@@ -39,68 +39,76 @@
 
 	<a href="{{ path('app_schedule_new') }}">Create new</a>
 
-	<h1>FunFact index</h1>
+	<div class="bottom">
+		<div>
+			<h2>FunFact index</h2>
 
-	<div class="container-swiper">
-		<div class="swiper mySwiper">
-			<div class="swiper-wrapper">
-				{% for fun_fact in fun_facts %}
-					<div class="swiper-slide card__article">
-						<p>{{ fun_fact.content }}</p>
-						<div>
-							<a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">Afficher</a>
-							<a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">Modifier</a>
-						</div>
+			<div class="container-swiper">
+				<div class="swiper mySwiper">
+					<div class="swiper-wrapper">
+						{% for fun_fact in fun_facts %}
+							<div class="swiper-slide card__article">
+								<p>{{ fun_fact.content }}</p>
+								<div>
+									<a href="{{ path('app_fun_fact_show', {'id': fun_fact.id}) }}">Afficher</a>
+									<a href="{{ path('app_fun_fact_edit', {'id': fun_fact.id}) }}">Modifier</a>
+								</div>
+							</div>
+						{% else %}
+							<div class="swiper-slide card__article">
+								<div>Aucun enregistrement trouvé</div>
+							</div>
+						{% endfor %}
 					</div>
-				{% else %}
-					<div class="swiper-slide card__article">
-						<div>Aucun enregistrement trouvé</div>
-					</div>
-				{% endfor %}
+
+					<!-- Boutons de navigation -->
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
 			</div>
 
-			<!-- Boutons de navigation -->
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
+			<a href="{{ path('app_fun_fact_new') }}">Create new</a>
+		</div>
+
+		<div>
+			<h2>Actu index</h2>
+
+			<div class="container-swiper">
+				<div class="swiper mySwiper">
+					<div class="swiper-wrapper">
+						{% for actu in actus %}
+							<div class="swiper-slide card__article card mb-4">
+								{% if actu.imageName %}
+									<img class="card-img-top" src="{{ asset('uploads/images/' ~ actu.imageName) }}" alt="{{ actu.imageName }}">
+								{% endif %}
+								<div class="card-body">
+									<h5 class="card-title">{{ actu.title }}</h5>
+									<p class="card-text">{{ actu.content }}</p>
+									<p class="card-text">
+										<small class="text-muted">{{ actu.date ? actu.date|date('Y-m-d') : '' }}</small>
+									</p>
+									<a href="{{ path('app_actu_show', {'id': actu.id}) }}">Show</a>
+									<a href="{{ path('app_actu_edit', {'id': actu.id}) }}">Edit</a>
+								</div>
+							</div>
+
+						{% else %}
+							<div class="alert alert-warning" role="alert">
+								No records found
+							</div>
+
+						{% endfor %}
+					</div>
+					<div class="swiper-pagination"></div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
+			</div>
+
+
+			<a href="{{ path('app_actu_new') }}">Create new</a>
 		</div>
 	</div>
 
-	<a href="{{ path('app_fun_fact_new') }}">Create new</a>
 
-	<h1>Actu index</h1>
-
-	<div class="container-swiper">
-		<div class="swiper mySwiper">
-			<div class="swiper-wrapper">
-				{% for actu in actus %}
-					<div class="card mb-4">
-						{% if actu.imageName %}
-							<img class="card-img-top" src="{{ asset('uploads/images/' ~ actu.imageName) }}" alt="{{ actu.imageName }}">
-						{% endif %}
-						<div class="card-body">
-							<h5 class="card-title">{{ actu.title }}</h5>
-							<p class="card-text">{{ actu.content }}</p>
-							<p class="card-text">
-								<small class="text-muted">{{ actu.date ? actu.date|date('Y-m-d') : '' }}</small>
-							</p>
-							<a href="{{ path('app_actu_show', {'id': actu.id}) }}">Show</a>
-							<a href="{{ path('app_actu_edit', {'id': actu.id}) }}">Edit</a>
-						</div>
-					</div>
-
-				{% else %}
-					<div class="alert alert-warning" role="alert">
-						No records found
-					</div>
-
-				{% endfor %}
-			</div>
-			<div class="swiper-pagination"></div>
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-		</div>
-	</div>
-
-
-	<a href="{{ path('app_actu_new') }}">Create new</a>
 {% endblock %}

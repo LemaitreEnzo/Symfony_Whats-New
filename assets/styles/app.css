@@ -6,13 +6,17 @@
 
 body {
     background-color: skyblue;
-    padding: 3%;
+    padding: 2%;
+}
+
+h2{
+    text-align: center;
 }
 
 
 .container-swiper {
     width: 100%;
-    max-width: 900px;
+    max-width: 500px;
     margin: auto;
     padding: 20px;
 }
@@ -59,21 +63,15 @@ body {
     background: #0056b3;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-    color: #007bff;
-    background: rgba(255, 255, 255, 0.8);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
-    transition: background 0.3s ease-in-out;
+.card__article p {
+    padding: 0 10%;
+    padding-bottom: 4%;
 }
 
-
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 20px !important;
+}
 .card {
     height: 500px;
 }
@@ -95,7 +93,8 @@ body {
 
 .card-body {
     text-align: center;
-    padding: 20px;
+    padding: 3% 8%;
+    margin-bottom: 30px;
 }
 
 .card-title {
@@ -112,7 +111,10 @@ body {
 
 .card-img-top {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
+    margin: 0;
+    display: block;
 }
 
 
@@ -194,4 +196,10 @@ body {
 
 .btn-edit:hover {
     background-color: #1e7e34;
+}
+
+
+.bottom {
+    display: flex;
+    justify-content: space-around;
 }

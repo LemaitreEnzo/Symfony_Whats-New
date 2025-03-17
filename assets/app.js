@@ -8,7 +8,7 @@ import './bootstrap.js';
 import './styles/app.css';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var swiper = new Swiper('.mySwiper', {
+    var swiper = new Swiper('.swiper', {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var swiper2 = new Swiper('.mySwiper', {
+    var swiper2 = new Swiper('.swiper', {
       pagination: {
         el: '.swiper-pagination',
       },
